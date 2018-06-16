@@ -16,8 +16,6 @@ print(series.head())
 series.plot()
 pyplot.show()
 
-# In[20]:
-
 
 from pandas import DataFrame
 from pandas import Series
@@ -86,7 +84,7 @@ def invert_scale(scaler, X, yhat):
 
 
 # fit an LSTM network to training data
-def fit_lstm(train, n_batch, nb_epoch, n_neurons):
+def fit_rnn(train, n_batch, nb_epoch, n_neurons):
     X, y = train[:, 0:-1], train[:, -1]
     X = X.reshape(X.shape[0], 1, X.shape[1])
     model = Sequential()
@@ -100,7 +98,7 @@ def fit_lstm(train, n_batch, nb_epoch, n_neurons):
 
 
 # run a repeated experiment
-def run_lstm(series, n_lag, n_repeats, n_epochs, n_batch, n_neurons):
+def run_rnn(series, n_lag, n_repeats, n_epochs, n_batch, n_neurons):
     # transform data to be stationary
     raw_values = series.values
     diff_values = difference(raw_values, 1)
@@ -116,11 +114,11 @@ def run_lstm(series, n_lag, n_repeats, n_epochs, n_batch, n_neurons):
     for r in range(n_repeats):
         # fit the model
         train_trimmed = train_scaled[2:, :]
-        lstm_model = fit_lstm(train_trimmed, n_batch, n_epochs, n_neurons)
+        rnn_model = fit_rnn(train_trimmed, n_batch, n_epochs, n_neurons)
         # forecast test dataset
         test_reshaped = test_scaled[:, 0:-1]
         test_reshaped = test_reshaped.reshape(len(test_reshaped), 1, 1)
-        output = lstm_model.predict(test_reshaped, batch_size=n_batch)
+        output = rnn_model.predict(test_reshaped, batch_size=n_batch)
         predictions = list()
         for i in range(len(output)):
             yhat = output[i, 0]
@@ -151,7 +149,7 @@ def run():
     n_neurons = 3
     # run the experiment
     results = DataFrame()
-    results['results'] = run_lstm(series, n_lag, n_repeats, n_epochs, n_batch, n_neurons)
+    results['results'] = run_rnn(series, n_lag, n_repeats, n_epochs, n_batch, n_neurons)
     # summarize results
     print(results.describe())
     # save boxplot
