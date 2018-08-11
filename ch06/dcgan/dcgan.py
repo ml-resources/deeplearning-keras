@@ -115,6 +115,8 @@ class DCGAN():
         # Adversarial ground truths
         valid = np.ones((batch_size, 1))
         fake = np.zeros((batch_size, 1))
+        f = open('dcgan_metrics.csv','w+')
+        f.write('epoch, D loss, accuracy, G loss\n')
 
         for epoch in range(epochs):
 
@@ -141,6 +143,9 @@ class DCGAN():
 
             # Train the generator (wants discriminator to mistake images as real)
             g_loss = self.combined.train_on_batch(noise, valid)
+            output = str(epoch) + ',' + str(d_loss[0]) + ',' + str(100*d_loss[1]) + ', ' +  str(g_loss) + '\n';
+            f.write(output)
+            f.flush()
 
             # Plot the progress
             print ("%d [D loss: %f, acc.: %.2f%%] [G loss: %f]" % (epoch, d_loss[0], 100*d_loss[1], g_loss))
