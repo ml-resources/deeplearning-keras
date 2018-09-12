@@ -150,11 +150,15 @@ def run():
     # run the experiment
     results = DataFrame()
     results['results'] = run_rnn(series, n_lag, n_repeats, n_epochs, n_batch, n_neurons)
+
+    results.plot(title="RNN RMSE Iteration")
+
+    pyplot.show()
     # summarize results
     print(results.describe())
     # save boxplot
-    results.boxplot()
-    pyplot.savefig('last_baseline.png')
+
+    pyplot.savefig('plot_rnn_rmse.png')
 
 
 # entry point

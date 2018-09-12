@@ -148,8 +148,8 @@ series = read_csv('sales-of-shampoo-over-a-three-ye.csv', header=0, parse_dates=
 print(series)
 # configure the experiment
 n_lag = 1
-n_repeats = 1
-n_epochs = 10
+n_repeats = 30
+n_epochs = 1000
 n_batch = 4
 n_neurons = 3
 results = DataFrame()
@@ -157,6 +157,9 @@ results['results'], raw_values1, predictions = experiment(series, n_lag, n_repea
 
 # summarize results
 print(results.describe())
+results.plot(title="LSTM RMSE Iteration")
+pyplot.show()
+pyplot.savefig('plot_lstm_rmse.png')
 
 
 
