@@ -1,5 +1,4 @@
 import csv
-
 from numpy import array, asarray, zeros
 from keras.preprocessing.text import one_hot, Tokenizer
 from keras.preprocessing.sequence import pad_sequences
@@ -17,19 +16,19 @@ X = X[['text', 'sentiment']]
 X = X[X.sentiment != 'Neutral']
 X['text'] = X['text'].apply(lambda x: x.lower())
 X['text'] = X['text'].apply((lambda x: re.sub('[^a-zA-z0-9\s]', '', x)))
+print(X)
 
 for idx, row in X.iterrows():
     row[0] = row[0].replace('rt', ' ')
 
 print(type(X))
-# X.to_csv('sentiments.csv', index=False)
 
 # use tokenizer and pad
 maxFeatures = 2000
 tokenizer = Tokenizer(num_words=maxFeatures, split=' ')
 tokenizer.fit_on_texts(X['text'].values)
-# maxFeatures = len(tokenizer.word_index) + 1
 encodeDocuments = tokenizer.texts_to_sequences(X['text'].values)
+print(encodeDocuments)
 
 max_length = 29
 paddedDocuments = pad_sequences(encodeDocuments, maxlen=max_length, padding='post')
@@ -73,22 +72,7 @@ model.add(Embedding(maxFeatures, 100, weights=[trainingToEmbeddings], input_leng
 model.add(Flatten())
 model.add(Dense(1, activation='sigmoid'))
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc'])
-
-# embed_dim = 128
-# lstm_out = 196
-# model.add(Embedding(maxFeatures, 100, weights=[trainingToEmbeddings], input_length=max_length, trainable=False))
-# model.add(SpatialDropout1D(0.4))
-# model.add(LSTM(lstm_out, dropout=0.2, recurrent_dropout=0.2))
-# model.add(Dense(1,activation='softmax'))
-# model.compile(loss = 'binary_crossentropy', optimizer='adam',metrics = ['accuracy'])
 print(model.summary())
-
-# labels = []
-# for i in X['sentiment']:
-#     if i == 'Positive':
-#         labels.append(1)
-#     else:
-#         labels.append(0)
 
 batch_size = 32
 model.fit(X_train, Y_train, epochs=50, batch_size=batch_size, verbose=0)
