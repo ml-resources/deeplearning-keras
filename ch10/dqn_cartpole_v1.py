@@ -82,13 +82,15 @@ if __name__ == "__main__":
             reward = reward if not done else -10
             next_state = np.reshape(next_state, [1, state_size])
             agent.remember(state, action, reward, next_state, done)
+
             state = next_state
-            output  = str(e) + ", " + str( time) + ", " + str(agent.epsilon) + "\n"
-            output_file.write(output)
-            output_file.flush()
+
             if done:
                 print("episode: {}/{}, score: {}, e: {:.2}"
                       .format(e, EPISODES, time, agent.epsilon))
+                output = str(e) + ", " + str(time) + ", " + str(agent.epsilon) + "\n"
+                output_file.write(output)
+                output_file.flush()
                 break
             if len(agent.memory) > batch_size:
                 agent.replay(batch_size)
