@@ -536,13 +536,13 @@ def cervicalTraining():
         history = model.fit_generator(train_generator, train_steps_per_epoch, epochs=1,
                                       validation_data=valid_generator, validation_steps=valid_steps_per_epoch,
                                       max_queue_size=1)
-        model.save('/Users/manpreet.singh/git/deeplearning/deeplearning-keras/ch05/weights/model.h5')
+        model.save('/Users/manpreet.singh/git/deeplearning/deeplearning-keras/ch05/models/model.h5')
 
     '''
     get predictions
     '''
     data_path = '/Users/manpreet.singh/git/deeplearning/deeplearning-keras/ch05/data/test'
-    model_path = '/Users/manpreet.singh/git/deeplearning/deeplearning-keras/ch05/weights/model.h5'
+    model_path = '/Users/manpreet.singh/git/deeplearning/deeplearning-keras/ch05/models/model.h5'
 
     resize_dims = (256, 256, 3)
     test_divisions = 20  # Used for segmenting image evaluation in threading
