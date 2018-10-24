@@ -27,7 +27,7 @@ def to_categorical(y, num_classes=None):
 
 def setUp(length, numHidden):
     """
-    Setup the weights.
+    Setup the models.
     :param length:
     :param size:
     :return:

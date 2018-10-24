@@ -107,7 +107,7 @@ def skipgram(context, x, W1, W2, loss):
 if __name__ == '__main__':
     corpusTokenized, V = tokenize(text)
 
-    # initialize weights (with random values) and loss function
+    # initialize models (with random values) and loss function
     N = 2  # assume that the hidden layer has dimensionality = 2
     window_size = 2  # symmetrical
     eta = 0.1  # learning rate
