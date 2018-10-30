@@ -7,7 +7,7 @@ from sklearn.metrics import confusion_matrix
 import pandas as pd
 
 # get dataset
-data = pd.read_csv('/spam-detection/spam_dataset.csv')
+data = pd.read_csv('./spam_dataset.csv')
 texts = []
 classes = []
 for i, label in enumerate(data['Class']):
