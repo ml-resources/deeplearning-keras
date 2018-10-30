@@ -7,7 +7,7 @@ from keras.models import Sequential, load_model
 from keras.layers import Dense
 from sklearn.metrics import confusion_matrix
 
-dataset = pd.read_csv('/Users/manpreet.singh/git/deeplearning/google/kaggle/breast-cancer/data.csv')
+dataset = pd.read_csv('./data.csv')
 
 # get dataset details
 print(dataset.head(5))
@@ -66,7 +66,7 @@ model.add(Dense(units=6, kernel_initializer='uniform', activation='relu'))
 model.add(Dense(units=1, kernel_initializer='uniform', activation='sigmoid'))
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 model.fit(XTrain, yTrain, batch_size=1, epochs=120)
-model.save('/Users/manpreet.singh/git/deeplearning/google/kaggle/breast-cancer/cancer_model.h5')
+model.save('./cancer_model.h5')
 yPred = model.predict(XTest)
 yPred = [1 if y > 0.5 else 0 for y in yPred]
 matrix = confusion_matrix(yTest, yPred)
